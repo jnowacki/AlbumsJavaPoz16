@@ -13,6 +13,10 @@
         width: 50px;
         margin-bottom: 10px;
     }
+
+    table, th, td {
+        border: 1px solid black;
+    }
 </style>
 <body>
 
@@ -64,7 +68,25 @@
 
     </c:choose>
 
-    ${sessionScope.albums}
+    <c:if test="${!empty sessionScope.albums}">
+        <table>
+            <tr>
+                <td>Id</td>
+                <td>Title</td>
+                <td>Author</td>
+                <td>Year</td>
+            </tr>
+            <c:forEach items="${sessionScope.albums}" var="album" varStatus="status">
+                <tr>
+                    <td>${status.count}</td>
+                    <td>${album.title}</td>
+                    <td>${album.author}</td>
+                    <td>${album.year}</td>
+                </tr>
+            </c:forEach>
+        </table>
+    </c:if>
+
 
 </form>
 
