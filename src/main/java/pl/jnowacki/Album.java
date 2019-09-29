@@ -2,12 +2,12 @@ package pl.jnowacki;
 
 import java.io.Serializable;
 
-public class AlbumServlet implements Serializable {
+public class Album implements Serializable {
     private String title;
     private String author;
     private int year;
 
-    public AlbumServlet() {
+    public Album() {
     }
 
     public String getTitle() {
