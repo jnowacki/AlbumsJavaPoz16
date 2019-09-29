@@ -1,3 +1,6 @@
+<%@ page import="java.util.ArrayList" %>
+<%@ page import="pl.jnowacki.Album" %>
+<%@ page import="java.util.List" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%--Expression language jest włączony--%>
 <%@ page isELIgnored="false" %>
@@ -12,6 +15,12 @@
     }
 </style>
 <body>
+
+<c:if test="${sessionScope.albums == null}">
+    <%
+        request.getSession().setAttribute("albums", new ArrayList<>());
+    %>
+</c:if>
 
 <form>
     <label for="title" class="label">Title:</label>
@@ -29,29 +38,33 @@
 
     <br/>
 
+
+    <jsp:useBean id="newAlbum" class="pl.jnowacki.Album"/>
+    <jsp:setProperty name="newAlbum" property="*"/>
+
     <c:choose>
         <c:when test="${param.submitted == null}">
             <h2><c:out value="Dodaj album"/></h2>
         </c:when>
 
         <c:otherwise>
-
-            <jsp:useBean id="newAlbum" class="pl.jnowacki.Album"/>
-            <jsp:setProperty name="newAlbum" property="*"/>
-
             <c:choose>
                 <c:when test="${!newAlbum.valid}">
                     <h2><c:out value="Niepoprawne dane!"/></h2>
                 </c:when>
 
                 <c:otherwise>
-                    ${newAlbum}
+                    <%
+                        List<Album> albums = ((List<Album>) request.getSession().getAttribute("albums"));
+                        albums.add(newAlbum);
+                    %>
                 </c:otherwise>
             </c:choose>
-
         </c:otherwise>
 
     </c:choose>
+
+    ${sessionScope.albums}
 
 </form>
 
