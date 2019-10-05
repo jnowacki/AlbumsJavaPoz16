@@ -14,6 +14,9 @@ public class AlbumServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+
+        System.out.println("W servlecie");
+
         if (req.getSession().getAttribute("albums") == null) {
             req.getSession().setAttribute("albums", new ArrayList<Album>());
         }
