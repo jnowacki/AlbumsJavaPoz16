@@ -25,11 +25,12 @@ public class AlbumServlet extends HttpServlet {
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String title = req.getParameter("title");
         String author = req.getParameter("author");
+        Integer year = null;
 
         try {
-            Integer year = Integer.valueOf(req.getParameter("year"));
+            year = Integer.valueOf(req.getParameter("year"));
         } catch (NumberFormatException e) {
-
+            System.out.println("Dane niepoprawne");
         }
 
         Album album = new Album(title, author, year);
