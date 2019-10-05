@@ -7,6 +7,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 
 @WebServlet(value = "/")
 public class AlbumServlet extends HttpServlet {
@@ -22,6 +23,23 @@ public class AlbumServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        req.getParameter()
+        String title = req.getParameter("title");
+        String author = req.getParameter("author");
+
+        try {
+            Integer year = Integer.valueOf(req.getParameter("year"));
+        } catch (NumberFormatException e) {
+
+        }
+
+        Album album = new Album(title, author, year);
+
+        if (album.isValid()){
+            List<Album> albums = (List<Album>)req.getSession().getAttribute("albums");
+            albums.add(album);
+        } else {
+            req.setAttribute("error", true);
+        }
+        getServletContext().getRequestDispatcher("/albums.jsp").forward(req, resp);
     }
 }

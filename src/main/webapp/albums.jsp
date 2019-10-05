@@ -33,34 +33,17 @@
     <input type="hidden" name="submitted" value="true">
 
     <input type="submit" value="Send">
-
-    <br/>
 </form>
 
-<jsp:useBean id="newAlbum" class="pl.jnowacki.Album"/>
-<jsp:setProperty name="newAlbum" property="*"/>
+<br/>
 
-<c:choose>
-    <c:when test="${param.submitted == null}">
-        <h2><c:out value="Dodaj album"/></h2>
-    </c:when>
+<c:if test="${param.submitted == null}">
+    <h2><c:out value="Dodaj album"/></h2>
+</c:if>
 
-    <c:otherwise>
-        <c:choose>
-            <c:when test="${!newAlbum.valid}">
-                <h2><c:out value="Niepoprawne dane!"/></h2>
-            </c:when>
-
-            <c:otherwise>
-                <%
-                    List<Album> albums = ((List<Album>) request.getSession().getAttribute("albums"));
-                    albums.add(newAlbum);
-                %>
-            </c:otherwise>
-        </c:choose>
-    </c:otherwise>
-
-</c:choose>
+<c:if test="${requestScope.error}">
+    <h2><c:out value="Niepoprawne dane!"/></h2>
+</c:if>
 
 <c:if test="${!empty sessionScope.albums}">
     <table>
